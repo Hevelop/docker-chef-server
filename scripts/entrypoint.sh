@@ -9,10 +9,14 @@ sysctl -w kernel.shmmax=17179869184
 sysctl net.ipv6.conf.lo.disable_ipv6=0
 
 # Create chef-server.rb with variables
+
+nginxCookbooks = "/opt/opscode/embedded/cookbooks/private-chef/recipes/nginx.rb"
 if [[ -z $ENABLE_NON_SSL ]]; then
     echo "nginx['enable_non_ssl']=false" >> /etc/opscode/chef-server.rb
+    sed '100a\node.default[''private_chef''][''nginx''][''enable_non_ssl'']=false' $nginxCookbooks > $nginxCookbooks
 else
     echo "nginx['enable_non_ssl']=$ENABLE_NON_SSL" >> /etc/opscode/chef-server.rb
+    sed '100a\node.default[''private_chef''][''nginx''][''enable_non_ssl'']=$ENABLE_NON_SSL' $nginxCookbooks > $nginxCookbooks
 fi
 
 if [[ -z $SSL_PORT ]]; then
