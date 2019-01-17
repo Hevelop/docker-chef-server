@@ -61,11 +61,13 @@ VOLUME ["/etc/opscode", "/var/opt/opscode", "/var/opt/chef-backup"]
 # Copy Entrypoint file
 ADD scripts/* /
 
+RUN bash /config-chef-server.sh
+
 # Set Entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Expose ports
-EXPOSE 443
+EXPOSE 80 443
 
 # Set WORKDIR
 WORKDIR /opt/opscode
