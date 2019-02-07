@@ -59,12 +59,10 @@ RUN set -x \
     && mkdir -p /var/opt/chef-backup
 
 # Volumes
-VOLUME ["/etc/opscode", "/var/opt/opscode", "/var/opt/chef-backup"]
+VOLUME ["/etc/opscode", "/etc/opscode-reporting", "/var/opt/opscode", "/var/opt/chef-backup"]
 
 # Copy Entrypoint file
 ADD scripts/* /
-
-RUN bash /config-chef-server.sh
 
 # Set Entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
